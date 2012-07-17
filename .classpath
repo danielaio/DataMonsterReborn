@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="lib" path="C:/Users/dstanoev/Desktop/dani/twitter/twitter4j-2.2.6/lib/twitter4j-async-2.2.6.jar" sourcepath="C:/Users/dstanoev/Desktop/dani/twitter/twitter4j-2.2.6/twitter4j-async/twitter4j-async-2.2.6-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/dstanoev/Desktop/dani/twitter/twitter4j-2.2.6/twitter4j-async/twitter4j-async-2.2.6-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/dstanoev/Desktop/dani/twitter/twitter4j-2.2.6/lib/twitter4j-core-2.2.6.jar" sourcepath="C:/Users/dstanoev/Desktop/dani/twitter/twitter4j-2.2.6/twitter4j-core/twitter4j-core-2.2.6-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/dstanoev/Desktop/dani/twitter/twitter4j-2.2.6/twitter4j-core/twitter4j-core-2.2.6-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/dstanoev/Desktop/dani/twitter/twitter4j-2.2.6/lib/twitter4j-examples-2.2.6.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/dstanoev/Desktop/dani/twitter/twitter4j-2.2.6/twitter4j-examples/twitter4j-examples-2.2.6-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/dstanoev/Desktop/dani/twitter/twitter4j-2.2.6/lib/twitter4j-media-support-2.2.6.jar" sourcepath="C:/Users/dstanoev/Desktop/dani/twitter/twitter4j-2.2.6/twitter4j-media-support/twitter4j-media-support-2.2.6-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/dstanoev/Desktop/dani/twitter/twitter4j-2.2.6/twitter4j-media-support/twitter4j-media-support-2.2.6-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/dstanoev/Desktop/dani/twitter/twitter4j-2.2.6/lib/twitter4j-stream-2.2.6.jar" sourcepath="C:/Users/dstanoev/Desktop/dani/twitter/twitter4j-2.2.6/twitter4j-stream/twitter4j-stream-2.2.6-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/dstanoev/Desktop/dani/twitter/twitter4j-2.2.6/twitter4j-stream/twitter4j-stream-2.2.6-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/dstanoev/Desktop/dani/twitter/mongo-2.8.0.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
