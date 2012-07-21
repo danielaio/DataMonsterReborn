@@ -1,8 +1,10 @@
 
-
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+
+import edu.cmu.cs.lti.ark.tweetnlp.RunPOSTagger;
 
 import twitter4j.FilterQuery;
 import twitter4j.IDs;
@@ -15,6 +17,7 @@ import twitter4j.TwitterFactory;
 import twitter4j.TwitterStream;
 import twitter4j.TwitterStreamFactory;
 import twitter4j.conf.ConfigurationBuilder;
+import twitter4j.json.DataObjectFactory;
 
 
 public final class GetFollowersIDs {
@@ -24,6 +27,33 @@ public final class GetFollowersIDs {
 	 * @param args message
 	 */
 	public static void main(String[] args) {
+
+		//		GetFollowersIDs.getStream(getFollowers(args), 10000);
+
+		//		long[] me = {216501896};
+		//		GetFollowersIDs.getStream(me, 120000);
+
+		String in = "forTagging.txt";
+		String out = "output.txt";
+
+		//DatabaseUtils utils = new DatabaseUtils();
+		//utils.createFileForTagging(in)
+
+		runPOSTagger(in, out);
+		
+	}
+
+	private static void runPOSTagger(String input, String output) {
+		try {
+			String[] array = {"-input", input, "-output", output};
+			RunPOSTagger.main(array );
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//only takes the first arg, need to change to enable lists of people
+	private static long[] getFollowers(String[] args) {
 
 		try {
 			Twitter twitter = new TwitterFactory().getInstance();
@@ -52,40 +82,35 @@ public final class GetFollowersIDs {
 			for(int i = 0; i < followers.size(); i++) {
 				followArray[i] = followers.get(i);
 			}
-			GetFollowersIDs.getStream(followArray);
 
+			return followArray;
 
-			System.exit(0);
 		} catch (TwitterException te) {
 			te.printStackTrace();
 			System.out.println("Failed to get followers' ids: " + te.getMessage());
-			System.exit(-1);
+
+			return null;
 		}
 	}
 
-	private static void getStream(long[] followArray) {
+
+	private static void getStream(long[] followArray, long milliseconds) {
 
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		cb.setDebugEnabled(true)
-		.setOAuthConsumerKey("EFvoJ3uiVR9oSYjrcBPb6g")
-		.setOAuthConsumerSecret("jTwzY9t5lQRQ7YemhVxfCIBfpfgfloTVGRgvBq9w")
+		.setOAuthConsumerKey("ghlKux5yYJD0hlu0kQITsg")
+		.setOAuthConsumerSecret("Kl9LPhiaPThgg5ia1RMWJgZHW1tC9rDEQ8xBPMfp8Y")
 		.setOAuthAccessToken("216501896-LuyoBsr6bfLDP73O1LkbtvW5WJPxwNpoOi8Se8cD")
-		.setOAuthAccessTokenSecret("LuftunWNHrhBn05xzkeOlxBGc2PlCFRo6bHe3e49lY");
-		
-		
+		.setOAuthAccessTokenSecret("LuftunWNHrhBn05xzkeOlxBGc2PlCFRo6bHe3e49lY")
+		.setJSONStoreEnabled(true);
+
+
 		StatusListener listener = new StatusListener() {
 			public void onStatus(Status status) {
 
-				try{
-					FileWriter fstream = new FileWriter("Beliebers.txt", true);
-					BufferedWriter out = new BufferedWriter(fstream);
-					out.write(status.getText() + "\n");
-					out.close();
-				}catch (Exception e){
-					System.err.println("Error: " + e.getMessage());
-				}
-
-				System.out.println("@" + status.getUser().getScreenName() + " - " + status.getText());
+				String rawJSON = DataObjectFactory.getRawJSON(status);
+				DatabaseUtils utils = new DatabaseUtils();
+				utils.storeTweet(rawJSON);
 			}
 
 			public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
@@ -108,15 +133,14 @@ public final class GetFollowersIDs {
 		twitterStream.addListener(listener);
 
 		System.out.println("Printing beliebers' tweets :):)");
-		twitterStream.filter(new FilterQuery(0, followArray, new String[1]));
+		twitterStream.filter(new FilterQuery(0, followArray, null));
 
 		try {
-			Thread.sleep(300000);
+			Thread.sleep(milliseconds);
 			twitterStream.cleanUp();
 			twitterStream.shutdown();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
 	}
 }

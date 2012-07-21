@@ -1,0 +1,631 @@
+spamming	V
+....	,
+for	P
+educational	A
+purposes	N
+:)	E
+:)	E
+
+wazzup	A
+testing	N
+:)	E
+
+and	&
+again	R
+!	,
+
+and	&
+more	A
+tweets	N
+:)	E
+
+blah	!
+blah	!
+black	A
+sheep	N
+
+almost	R
+done	A
+testing	N
+:D	E
+
+quacks	V
+like	P
+a	D
+tweet	N
+:D	E
+
+spamming	V
+....	,
+for	P
+educational	A
+purposes	N
+:)	E
+:)	E
+
+wazzup	A
+testing	N
+:)	E
+
+and	&
+again	R
+!	,
+
+and	&
+more	A
+tweets	N
+:)	E
+
+blah	!
+blah	!
+black	A
+sheep	N
+
+almost	R
+done	A
+testing	N
+:D	E
+
+quacks	V
+like	P
+a	D
+tweet	N
+:D	E
+
+testing	V
+one	$
+
+testing	V
+two	$
+
+testing	V
+three	$
+
+testing	V
+four	$
+..	,
+
+testing	V
+five	$
+...	,
+
+spamming	V
+....	,
+for	P
+educational	A
+purposes	N
+:)	E
+:)	E
+
+wazzup	A
+testing	N
+:)	E
+
+and	&
+again	R
+!	,
+
+and	&
+more	A
+tweets	N
+:)	E
+
+blah	!
+blah	!
+black	A
+sheep	N
+
+almost	R
+done	A
+testing	N
+:D	E
+
+quacks	V
+like	P
+a	D
+tweet	N
+:D	E
+
+testing	V
+one	$
+
+testing	V
+two	$
+
+testing	V
+three	$
+
+testing	V
+four	$
+..	,
+
+testing	V
+five	$
+...	,
+
+spamming	V
+....	,
+for	P
+educational	A
+purposes	N
+:)	E
+:)	E
+
+wazzup	A
+testing	N
+:)	E
+
+and	&
+again	R
+!	,
+
+and	&
+more	A
+tweets	N
+:)	E
+
+blah	!
+blah	!
+black	A
+sheep	N
+
+almost	R
+done	A
+testing	N
+:D	E
+
+quacks	V
+like	P
+a	D
+tweet	N
+:D	E
+
+testing	V
+one	$
+
+testing	V
+two	$
+
+testing	V
+three	$
+
+testing	V
+four	$
+..	,
+
+testing	V
+five	$
+...	,
+
+spamming	V
+....	,
+for	P
+educational	A
+purposes	N
+:)	E
+:)	E
+
+wazzup	A
+testing	N
+:)	E
+
+and	&
+again	R
+!	,
+
+and	&
+more	A
+tweets	N
+:)	E
+
+blah	!
+blah	!
+black	A
+sheep	N
+
+almost	R
+done	A
+testing	N
+:D	E
+
+quacks	V
+like	P
+a	D
+tweet	N
+:D	E
+
+testing	V
+one	$
+
+testing	V
+two	$
+
+testing	V
+three	$
+
+testing	V
+four	$
+..	,
+
+testing	V
+five	$
+...	,
+
+spamming	V
+....	,
+for	P
+educational	A
+purposes	N
+:)	E
+:)	E
+
+wazzup	A
+testing	N
+:)	E
+
+and	&
+again	R
+!	,
+
+and	&
+more	A
+tweets	N
+:)	E
+
+blah	!
+blah	!
+black	A
+sheep	N
+
+almost	R
+done	A
+testing	N
+:D	E
+
+quacks	V
+like	P
+a	D
+tweet	N
+:D	E
+
+testing	V
+one	$
+
+testing	V
+two	$
+
+testing	V
+three	$
+
+testing	V
+four	$
+..	,
+
+testing	V
+five	$
+...	,
+
+spamming	V
+....	,
+for	P
+educational	A
+purposes	N
+:)	E
+:)	E
+
+wazzup	A
+testing	N
+:)	E
+
+and	&
+again	R
+!	,
+
+and	&
+more	A
+tweets	N
+:)	E
+
+blah	!
+blah	!
+black	A
+sheep	N
+
+almost	R
+done	A
+testing	N
+:D	E
+
+quacks	V
+like	P
+a	D
+tweet	N
+:D	E
+
+testing	V
+one	$
+
+testing	V
+two	$
+
+testing	V
+three	$
+
+testing	V
+four	$
+..	,
+
+testing	V
+five	$
+...	,
+
+spamming	V
+....	,
+for	P
+educational	A
+purposes	N
+:)	E
+:)	E
+
+wazzup	A
+testing	N
+:)	E
+
+and	&
+again	R
+!	,
+
+and	&
+more	A
+tweets	N
+:)	E
+
+blah	!
+blah	!
+black	A
+sheep	N
+
+almost	R
+done	A
+testing	N
+:D	E
+
+quacks	V
+like	P
+a	D
+tweet	N
+:D	E
+
+testing	V
+one	$
+
+testing	V
+two	$
+
+testing	V
+three	$
+
+testing	V
+four	$
+..	,
+
+testing	V
+five	$
+...	,
+
+spamming	V
+....	,
+for	P
+educational	A
+purposes	N
+:)	E
+:)	E
+
+wazzup	A
+testing	N
+:)	E
+
+and	&
+again	R
+!	,
+
+and	&
+more	A
+tweets	N
+:)	E
+
+blah	!
+blah	!
+black	A
+sheep	N
+
+almost	R
+done	A
+testing	N
+:D	E
+
+quacks	V
+like	P
+a	D
+tweet	N
+:D	E
+
+testing	V
+one	$
+
+testing	V
+two	$
+
+testing	V
+three	$
+
+testing	V
+four	$
+..	,
+
+testing	V
+five	$
+...	,
+
+spamming	V
+....	,
+for	P
+educational	A
+purposes	N
+:)	E
+:)	E
+
+wazzup	A
+testing	N
+:)	E
+
+and	&
+again	R
+!	,
+
+and	&
+more	A
+tweets	N
+:)	E
+
+blah	!
+blah	!
+black	A
+sheep	N
+
+almost	R
+done	A
+testing	N
+:D	E
+
+quacks	V
+like	P
+a	D
+tweet	N
+:D	E
+
+testing	V
+one	$
+
+testing	V
+two	$
+
+testing	V
+three	$
+
+testing	V
+four	$
+..	,
+
+testing	V
+five	$
+...	,
+
+spamming	V
+....	,
+for	P
+educational	A
+purposes	N
+:)	E
+:)	E
+
+wazzup	A
+testing	N
+:)	E
+
+and	&
+again	R
+!	,
+
+and	&
+more	A
+tweets	N
+:)	E
+
+blah	!
+blah	!
+black	A
+sheep	N
+
+almost	R
+done	A
+testing	N
+:D	E
+
+quacks	V
+like	P
+a	D
+tweet	N
+:D	E
+
+testing	V
+one	$
+
+testing	V
+two	$
+
+testing	V
+three	$
+
+testing	V
+four	$
+..	,
+
+testing	V
+five	$
+...	,
+
+spamming	V
+....	,
+for	P
+educational	A
+purposes	N
+:)	E
+:)	E
+
+wazzup	A
+testing	N
+:)	E
+
+and	&
+again	R
+!	,
+
+and	&
+more	A
+tweets	N
+:)	E
+
+blah	!
+blah	!
+black	A
+sheep	N
+
+almost	R
+done	A
+testing	N
+:D	E
+
+quacks	V
+like	P
+a	D
+tweet	N
+:D	E
+
+testing	V
+one	$
+
+testing	V
+two	$
+
+testing	V
+three	$
+
+testing	V
+four	$
+..	,
+
+testing	V
+five	$
+...	,
+
