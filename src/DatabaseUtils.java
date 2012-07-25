@@ -5,6 +5,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import org.bson.types.ObjectId;
 
@@ -38,6 +41,26 @@ public class DatabaseUtils {
 
 		DBCollection coll = db.getCollection("youngstersTweets");
 		coll.save((DBObject) JSON.parse(tweet));
+	}
+
+	public List<DBObject> getUsers() {
+		DB db = m.getDB("mydb");
+		DBCollection coll = db.getCollection("youngstersTweets");
+
+		DBCursor cur = coll.find(new BasicDBObject(), new BasicDBObject("user.id_str", 1));
+
+		return cur.toArray();
+
+	}
+
+	public DBCursor getTweetsForUser(DBObject user) {
+
+		DB db = m.getDB("mydb");
+		DBCollection coll = db.getCollection("youngstersTweets");
+
+		DBCursor cur = coll.find(new BasicDBObject("user.id_str", ((DBObject)(user.get("user"))).get("id_str")));
+		return cur;
+
 	}
 
 	public void getAllTweets() {
@@ -90,15 +113,21 @@ public class DatabaseUtils {
 				String id = line.substring(0, line.length() - 2);
 				line = in.readLine();
 
-				BasicDBObject tweetObj = new BasicDBObject();
+				HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
 				while (!line.equals("")) {
 					//each line is a word, tag pair
 					String word = line.substring(0, line.indexOf("\t"));
 					String tag = line.substring(line.indexOf("\t") + 1);
-					tweetObj.put(word.contains(".") ? "ellipsis" : word, tag);
+
+					tag = convertTag(tag);
+					if (map.get(tag) == null)
+						map.put(tag, new ArrayList<String>());
+					map.get(tag).add(word);
+
 					line = in.readLine();
 				}
 
+				BasicDBObject tweetObj = new BasicDBObject(map);
 				BasicDBObject newObj = new BasicDBObject().append("$set", new BasicDBObject().append("text", tweetObj));
 
 				coll.update(new BasicDBObject("_id", new ObjectId(id)), newObj);
@@ -111,6 +140,27 @@ public class DatabaseUtils {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private static String convertTag(String tag) {
+		if (tag.equals("$"))
+			return "number";
+		else if (tag.equals(","))
+			return "punct";
+		else if (tag.equals("&"))
+			return "cc";
+		else if (tag.equals("^"))
+			return "properNoun";
+		else if (tag.equals("!"))
+			return "bang";
+		else if (tag.equals("#"))
+			return "hash";
+		else if (tag.equals("@"))
+			return "mention";
+		else if (tag.equals("~"))
+			return "retweet";
+		else 
+			return tag;
 	}
 
 }

@@ -14,8 +14,5 @@ public class TaggerUtils {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-	
-	
-	
+	}	
 }

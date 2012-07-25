@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import com.mongodb.DBCursor;
+
 import edu.cmu.cs.lti.ark.tweetnlp.RunPOSTagger;
 
 import twitter4j.FilterQuery;
@@ -33,8 +35,8 @@ public final class GetFollowersIDs {
 
 		//		GetFollowersIDs.getStream(getFollowers(args), 10000);
 
-		//		long[] me = {216501896};
-		//		TweetCollector.getStream(me, 120000);
+		//long[] me = {216501896};
+		//TweetCollector.getStream(me, 120000);
 
 		String in = "forTagging.txt";
 		String out = "output.txt";
@@ -46,6 +48,13 @@ public final class GetFollowersIDs {
 		utils.storeTaggedTweets(out);
 		
 		utils.getAllTweets();
+		
+//		System.out.println(utils.getUsers().toString());
+//		System.out.println(utils.getUsers().get(0));
+//		DBCursor tweetsForUser = utils.getTweetsForUser(utils.getUsers().get(0));
+//		while (tweetsForUser.hasNext()) {
+//			System.out.println(tweetsForUser.next());
+//		}
 		
 	}
 
