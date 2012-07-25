@@ -26,31 +26,30 @@ public final class GetFollowersIDs {
 	 *
 	 * @param args message
 	 */
+	
+	
+	
 	public static void main(String[] args) {
 
 		//		GetFollowersIDs.getStream(getFollowers(args), 10000);
 
 		//		long[] me = {216501896};
-		//		GetFollowersIDs.getStream(me, 120000);
+		//		TweetCollector.getStream(me, 120000);
 
 		String in = "forTagging.txt";
 		String out = "output.txt";
 
-		//DatabaseUtils utils = new DatabaseUtils();
-		//utils.createFileForTagging(in)
+		DatabaseUtils utils = new DatabaseUtils();
+		//utils.createFileForTagging(in);
 
-		runPOSTagger(in, out);
+		//TaggerUtils.runPOSTagger(in, out);
+		utils.storeTaggedTweets(out);
+		
+		utils.getAllTweets();
 		
 	}
 
-	private static void runPOSTagger(String input, String output) {
-		try {
-			String[] array = {"-input", input, "-output", output};
-			RunPOSTagger.main(array );
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	
 	
 	//only takes the first arg, need to change to enable lists of people
 	private static long[] getFollowers(String[] args) {
@@ -94,53 +93,5 @@ public final class GetFollowersIDs {
 	}
 
 
-	private static void getStream(long[] followArray, long milliseconds) {
-
-		ConfigurationBuilder cb = new ConfigurationBuilder();
-		cb.setDebugEnabled(true)
-		.setOAuthConsumerKey("ghlKux5yYJD0hlu0kQITsg")
-		.setOAuthConsumerSecret("Kl9LPhiaPThgg5ia1RMWJgZHW1tC9rDEQ8xBPMfp8Y")
-		.setOAuthAccessToken("216501896-LuyoBsr6bfLDP73O1LkbtvW5WJPxwNpoOi8Se8cD")
-		.setOAuthAccessTokenSecret("LuftunWNHrhBn05xzkeOlxBGc2PlCFRo6bHe3e49lY")
-		.setJSONStoreEnabled(true);
-
-
-		StatusListener listener = new StatusListener() {
-			public void onStatus(Status status) {
-
-				String rawJSON = DataObjectFactory.getRawJSON(status);
-				DatabaseUtils utils = new DatabaseUtils();
-				utils.storeTweet(rawJSON);
-			}
-
-			public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
-				System.out.println("Got a status deletion notice id:" + statusDeletionNotice.getStatusId());
-			}
-
-			public void onTrackLimitationNotice(int numberOfLimitedStatuses) {
-				System.out.println("Got track limitation notice:" + numberOfLimitedStatuses);
-			}
-
-			public void onScrubGeo(long userId, long upToStatusId) {
-				System.out.println("Got scrub_geo event userId:" + userId + " upToStatusId:" + upToStatusId);
-			}
-
-			public void onException(Exception ex) {
-				ex.printStackTrace();
-			}
-		};
-		TwitterStream twitterStream = new TwitterStreamFactory(cb.build()).getInstance();
-		twitterStream.addListener(listener);
-
-		System.out.println("Printing beliebers' tweets :):)");
-		twitterStream.filter(new FilterQuery(0, followArray, null));
-
-		try {
-			Thread.sleep(milliseconds);
-			twitterStream.cleanUp();
-			twitterStream.shutdown();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
+	
 }
