@@ -6,8 +6,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.bson.types.ObjectId;
 
@@ -43,26 +46,45 @@ public class DatabaseUtils {
 		coll.save((DBObject) JSON.parse(tweet));
 	}
 
-	public List<DBObject> getUsers() {
+	
+	//this should be a set rather than an array
+	public Collection<String> getUsers() {
 		DB db = m.getDB("mydb");
 		DBCollection coll = db.getCollection("youngstersTweets");
 
-		DBCursor cur = coll.find(new BasicDBObject(), new BasicDBObject("user.id_str", 1));
+		//DBCursor cur = coll.find(new BasicDBObject(), new BasicDBObject("user.id_str", 1));
+		Collection<String> set = new HashSet<String>();
 
-		return cur.toArray();
+		DBCursor cur = coll.find();
+		while (cur.hasNext()) {
+			String userid = (String) ((DBObject)(cur.next().get("user"))).get("id_str");
+			set.add(userid);
+		}
+		
+		return set;
 
 	}
 
-	public DBCursor getTweetsForUser(DBObject user) {
+	public DBCursor getTweetsForUser(String user) {
 
 		DB db = m.getDB("mydb");
 		DBCollection coll = db.getCollection("youngstersTweets");
 
-		DBCursor cur = coll.find(new BasicDBObject("user.id_str", ((DBObject)(user.get("user"))).get("id_str")));
+		DBCursor cur = coll.find(new BasicDBObject("user.id_str", user)); 
+				//((DBObject)(user.get("user"))).get("id_str")));
 		return cur;
 
 	}
 
+	
+	public void removeTweets() {
+		DB db = m.getDB("mydb");
+		DBCollection coll = db.getCollection("youngstersTweets");
+		
+		coll.remove(new BasicDBObject("_id", new ObjectId("50107a0d00618068dd15f97d")));
+		
+	}
+	
 	public void getAllTweets() {
 		DB db = m.getDB("mydb");
 		DBCollection coll = db.getCollection("youngstersTweets");
@@ -128,7 +150,7 @@ public class DatabaseUtils {
 				}
 
 				BasicDBObject tweetObj = new BasicDBObject(map);
-				BasicDBObject newObj = new BasicDBObject().append("$set", new BasicDBObject().append("text", tweetObj));
+				BasicDBObject newObj = new BasicDBObject().append("$set", new BasicDBObject().append("texttt", tweetObj));
 
 				coll.update(new BasicDBObject("_id", new ObjectId(id)), newObj);
 				line = in.readLine();

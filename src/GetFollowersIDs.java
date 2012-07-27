@@ -35,19 +35,20 @@ public final class GetFollowersIDs {
 
 		//		GetFollowersIDs.getStream(getFollowers(args), 10000);
 
-		//long[] me = {216501896};
-		//TweetCollector.getStream(me, 120000);
-
+//		long[] me = {216501896};
+//		TweetCollector.getStream(me, 120000);
+//
 		String in = "forTagging.txt";
 		String out = "output.txt";
 
 		DatabaseUtils utils = new DatabaseUtils();
-		//utils.createFileForTagging(in);
+//		utils.createFileForTagging(in);
 
-		//TaggerUtils.runPOSTagger(in, out);
-		utils.storeTaggedTweets(out);
+//		TaggerUtils.runPOSTagger(in, out);
+//		utils.storeTaggedTweets(out);
 		
-		utils.getAllTweets();
+		
+//		utils.getAllTweets();
 		
 //		System.out.println(utils.getUsers().toString());
 //		System.out.println(utils.getUsers().get(0));
@@ -55,6 +56,9 @@ public final class GetFollowersIDs {
 //		while (tweetsForUser.hasNext()) {
 //			System.out.println(tweetsForUser.next());
 //		}
+
+		FeatureExtraction extr = new FeatureExtraction("youngUsers.txt", "Y");
+		extr.extractFeatures();
 		
 	}
 

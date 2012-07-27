@@ -1,66 +1,33 @@
-5006cffd14f447e9ddc8ddbe	$
-spamming	N
-....	,
-for	P
-educational	A
-purposes	N
-:)	E
-:)	E
-
-5006dd7a14f4ab6e2e2d5f43	$
-wazzup	N
-testing	N
-:)	E
-
-5006dd8114f4ab6e2e2d5f44	$
-and	&
+50107a1700618068dd15f97e	N
+testing	V
 again	R
-!	,
+:	,
+S	E
+:	E
+S	E
+:	E
+S	E
+!!!!	,
 
-5006dd8714f4ab6e2e2d5f45	$
-and	&
-more	A
-tweets	N
-:)	E
-
-5006e05d14f4384585b97e6c	@
-blah	!
-blah	!
-black	A
-sheep	N
-
-5006e06e14f4384585b97e6d	$
-almost	R
-done	A
-testing	N
-:D	E
-
-5006e07d14f4384585b97e6e	$
-quacks	N
-like	P
+50107a1e00618068dd15f97f	$
+just	R
 a	D
-tweet	N
-:D	E
+couple	N
+more	R
+:	,
+S	E
 
-5009c7c614f408b34fcac1ba	$
-testing	V
-one	$
-
-5009c7cc14f408b34fcac1bb	$
-testing	V
-two	$
-
-5009c7d514f408b34fcac1bc	$
-testing	V
-three	$
-
-5009c7e514f408b34fcac1bd	$
-testing	V
-four	$
-..	,
-
-5009c7eb14f408b34fcac1be	$
-testing	V
-five	$
+50107a2400618068dd15f980	$
+what	O
+now	R
 ...	,
+
+50107a4700618068dd15f981	$
+squeezing	V
+one	$
+more	A
+:	,
+S	E
+:D	E
+!!...	,
 
