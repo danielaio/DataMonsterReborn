@@ -15,6 +15,7 @@ import java.util.Set;
 import org.bson.types.ObjectId;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
@@ -46,6 +47,36 @@ public class DatabaseUtils {
 		coll.save((DBObject) JSON.parse(tweet));
 	}
 
+	
+	/**
+	 * Store the followers for this user in a json file.
+	 * @param user
+	 */
+	public void storeFollowers(long[] followers, String user) {
+		DB db = m.getDB("mydb");
+		DBCollection coll = db.getCollection("followers");
+
+		for (long follower : followers) {			
+			
+			BasicDBObject celebrity = new BasicDBObject().append("id_str", user);
+			if (coll.find(celebrity).size() == 0)
+				coll.save(celebrity);
+			BasicDBObject newObj = new BasicDBObject().append("$push", new BasicDBObject().append("followers", follower));
+			coll.update(celebrity, newObj);
+		}
+	}
+	
+	public void getFollowersCelebs() {
+		DB db = m.getDB("mydb");
+		DBCollection coll = db.getCollection("followers");
+
+		DBCursor cur = coll.find();
+		cur.size();
+		while (cur.hasNext()) {
+			System.out.println(cur.next().toString());
+		}
+	}
+	
 	
 	//this should be a set rather than an array
 	public Collection<String> getUsers() {
