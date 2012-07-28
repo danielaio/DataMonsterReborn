@@ -28,10 +28,11 @@ import com.mongodb.util.JSON;
 public class DatabaseUtils {
 
 	private Mongo m;
-
+	private DB db;
 	public DatabaseUtils() {
 		try {
 			m = new Mongo();
+			db = m.getDB("mydb");
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (MongoException e) {
@@ -41,8 +42,6 @@ public class DatabaseUtils {
 
 
 	public void storeTweet(String tweet) {
-		DB db = m.getDB( "mydb" );
-
 		DBCollection coll = db.getCollection("youngstersTweets");
 		coll.save((DBObject) JSON.parse(tweet));
 	}
@@ -52,35 +51,32 @@ public class DatabaseUtils {
 	 * Store the followers for this user in a json file.
 	 * @param user
 	 */
-	public void storeFollowers(long[] followers, String user) {
-		DB db = m.getDB("mydb");
+	public void storeFollowers(ArrayList<Long> followers) {
 		DBCollection coll = db.getCollection("followers");
 
 		for (long follower : followers) {			
-			
-			BasicDBObject celebrity = new BasicDBObject().append("id_str", user);
-			if (coll.find(celebrity).size() == 0)
-				coll.save(celebrity);
-			BasicDBObject newObj = new BasicDBObject().append("$push", new BasicDBObject().append("followers", follower));
-			coll.update(celebrity, newObj);
+			BasicDBObject f = new BasicDBObject("_id", follower);
+			coll.save(f);
 		}
 	}
 	
-	public void getFollowersCelebs() {
-		DB db = m.getDB("mydb");
+	public long[] getCollectedFollowersFromDB() {
 		DBCollection coll = db.getCollection("followers");
 
 		DBCursor cur = coll.find();
-		cur.size();
-		while (cur.hasNext()) {
-			System.out.println(cur.next().toString());
+		System.out.println(cur.count());
+		
+		long[] arr = new long[cur.count()];
+		for (int i = 0; i < cur.count(); i++) {
+			arr[i] = ((Long) cur.next().get("_id")).longValue();
 		}
+		
+		return arr;
 	}
 	
 	
 	//this should be a set rather than an array
 	public Collection<String> getUsers() {
-		DB db = m.getDB("mydb");
 		DBCollection coll = db.getCollection("youngstersTweets");
 
 		//DBCursor cur = coll.find(new BasicDBObject(), new BasicDBObject("user.id_str", 1));
@@ -98,7 +94,6 @@ public class DatabaseUtils {
 
 	public DBCursor getTweetsForUser(String user) {
 
-		DB db = m.getDB("mydb");
 		DBCollection coll = db.getCollection("youngstersTweets");
 
 		DBCursor cur = coll.find(new BasicDBObject("user.id_str", user)); 
@@ -109,7 +104,6 @@ public class DatabaseUtils {
 
 	
 	public void removeTweets() {
-		DB db = m.getDB("mydb");
 		DBCollection coll = db.getCollection("youngstersTweets");
 		
 		coll.remove(new BasicDBObject("_id", new ObjectId("50107a0d00618068dd15f97d")));
@@ -117,7 +111,6 @@ public class DatabaseUtils {
 	}
 	
 	public void getAllTweets() {
-		DB db = m.getDB("mydb");
 		DBCollection coll = db.getCollection("youngstersTweets");
 		DBCursor cur = coll.find();
 		while (cur.hasNext()) {
@@ -126,8 +119,6 @@ public class DatabaseUtils {
 	}
 
 	public void createFileForTagging(String filename){
-
-		DB db = m.getDB("mydb");
 		DBCollection coll = db.getCollection("youngstersTweets");
 
 		DBCursor cur = coll.find();
@@ -153,7 +144,6 @@ public class DatabaseUtils {
 	//method to parse output file 
 	public void storeTaggedTweets(String output) {
 
-		DB db = m.getDB("mydb");
 		DBCollection coll = db.getCollection("youngstersTweets");
 
 		try {
