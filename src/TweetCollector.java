@@ -11,25 +11,30 @@ import twitter4j.json.DataObjectFactory;
 
 public class TweetCollector {
 
-	static Configuration authenticate () {
-		ConfigurationBuilder cb = new ConfigurationBuilder();
-		cb.setDebugEnabled(true)
-		.setOAuthConsumerKey("ghlKux5yYJD0hlu0kQITsg")
-		.setOAuthConsumerSecret("Kl9LPhiaPThgg5ia1RMWJgZHW1tC9rDEQ8xBPMfp8Y")
-		.setOAuthAccessToken("216501896-LuyoBsr6bfLDP73O1LkbtvW5WJPxwNpoOi8Se8cD")
-		.setOAuthAccessTokenSecret("LuftunWNHrhBn05xzkeOlxBGc2PlCFRo6bHe3e49lY")
-		.setJSONStoreEnabled(true);
-		
-		return cb.build();		
+	TweetsStorageUtils utils;
+	
+	public TweetCollector(String coll) {
+		utils = new TweetsStorageUtils(coll);
 	}
 	
-	static void getStream(long[] followArray, long milliseconds) {
+	public void createFileForTagging(String filename) {
+		utils.createFileForTagging(filename);
+	}
+	
+	public void storeTaggedTweets(String output) {
+		utils.storeTaggedTweets(output);
+	}
+	
+	public void getAllTweets() {
+		utils.getAllTweets();
+	}
+	
+	public void getStream(long[] followArray, long milliseconds) {
 
 		StatusListener listener = new StatusListener() {
 			public void onStatus(Status status) {
 
 				String rawJSON = DataObjectFactory.getRawJSON(status);
-				DatabaseUtils utils = new DatabaseUtils();
 				utils.storeTweet(rawJSON);
 			}
 
@@ -49,7 +54,7 @@ public class TweetCollector {
 				ex.printStackTrace();
 			}
 		};
-		TwitterStream twitterStream = new TwitterStreamFactory(authenticate()).getInstance();
+		TwitterStream twitterStream = new TwitterStreamFactory(Authentication.authenticate()).getInstance();
 		twitterStream.addListener(listener);
 
 		System.out.println("Printing beliebers' tweets :):)");

@@ -21,11 +21,13 @@ public class FeatureExtraction {
 	BufferedWriter out;
 	FileWriter fstream;
 	String filename;
-
-	public FeatureExtraction(String filename, String label) {
+	String coll; 
+	
+	public FeatureExtraction(String filename, String label, String collection) {
 
 		this.filename = filename;
 		this.label = label;	
+		this.coll = collection;
 
 		result = new LinkedHashMap<String, Double>();
 		result.put("N", 0.0);
@@ -75,8 +77,7 @@ public class FeatureExtraction {
 	public void extractFeatures() {
 
 
-		DatabaseUtils utils = new DatabaseUtils();
-
+		TweetsStorageUtils utils = new TweetsStorageUtils(coll);
 		Collection<String> users = utils.getUsers();
 
 		System.out.println(users.toString());
@@ -89,6 +90,10 @@ public class FeatureExtraction {
 			while (tweetsForUser.hasNext()) {
 
 				DBObject next = tweetsForUser.next();
+				
+				if (next.get("texttt") == null)
+					continue;
+				
 				BasicDBObject object = (BasicDBObject) next.get("texttt");
 
 				Map<String, ArrayList<String>> tweet = object.toMap();

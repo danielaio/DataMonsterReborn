@@ -8,15 +8,15 @@ import twitter4j.TwitterFactory;
 
 public class FollowersCollector {
 
-	DatabaseUtils utils;
+	FollowersStorageUtils utils;
 
-	public FollowersCollector (DatabaseUtils utils) {
-		this.utils = utils;
+	public FollowersCollector (String coll) {
+		this.utils = new FollowersStorageUtils(coll);
 	}
 
-	public void getAllFollowers(String[] args, int iters) {
+	public void collectAllFollowers(String[] args, int iters) {
 
-		Twitter twitter = new TwitterFactory(TweetCollector.authenticate()).getInstance();
+		Twitter twitter = new TwitterFactory(Authentication.authenticate()).getInstance();
 
 		long cursor = -1;
 		IDs ids;
@@ -41,46 +41,9 @@ public class FollowersCollector {
 		}
 	}
 
-	private static long[] getFollowers(String[] args) {
-
-		try {
-
-			Twitter twitter = new TwitterFactory().getInstance();
-			long cursor = -1;
-			IDs ids;
-			System.out.println("Listing followers's ids.");
-
-			ArrayList<Long> followers = new ArrayList<Long>();
-
-			int count = 1;
-			do {
-				if (0 < args.length) {
-					ids = twitter.getFollowersIDs(args[0], cursor);
-				} else {
-					ids = twitter.getFollowersIDs(cursor);
-				}
-				for (long id : ids.getIDs()) {
-					count++;
-					followers.add(id);
-				}
-			} while ((cursor = ids.getNextCursor()) != 0 && count <= 1000);
-
-			long[] followArray = new long[followers.size()];
-			for(int i = 0; i < followers.size(); i++) {
-				followArray[i] = followers.get(i);
-			}
-
-
-			//	System.out.println(count);
-
-			return followArray;
-
-		} catch (TwitterException te) {
-			te.printStackTrace();
-			System.out.println("Failed to get followers' ids: " + te.getMessage());
-
-			return null;
-		}
+	//could add some sort of randomisation here...
+	public long[] getCollectedFollowers() {
+		return utils.getCollectedFollowersFromDB();
 	}
-
+	
 }
