@@ -132,15 +132,15 @@ public class TweetsStorageUtils {
 	public void createFileForTagging(String filename){
 		DBCursor cur = coll.find();
 
-		while(cur.hasNext()) {
+		int count = 0;
+		while(cur.hasNext() && count < 10000) {
 
 			try {
 				FileWriter fstream = new FileWriter(filename, true);
 				BufferedWriter out = new BufferedWriter(fstream);
 				DBObject next = cur.next();
 				String text = (String) next.get("text");
-				if (text.contains("\n"))
-					text = text.replaceAll("\n", " ");
+				text = text.replaceAll("\n\r|\r|\n", " ");
 				out.write(next.get("_id")+ " " + text + "\n");
 				out.close();
 				fstream.close();
@@ -149,6 +149,7 @@ public class TweetsStorageUtils {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			count++;
 		}
 	}
 

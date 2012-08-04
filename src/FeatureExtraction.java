@@ -110,7 +110,7 @@ public class FeatureExtraction {
 
 			//normalise (divide by total)
 			for (String key : result.keySet()) {
-				result.put(key, result.get(key) / total);
+				result.put(key, total == 0 ? 0 : (result.get(key) / total));
 			}
 
 			System.out.println(total);

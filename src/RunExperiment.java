@@ -43,11 +43,16 @@ public final class RunExperiment {
 				"MTVteenwolf", "IMDb", "gossipgirl", "youngdemocrat", 
 				"younglibs", "BCYoungLiberals", "wayoungliberals", "taylorswift13", "justinbieber"};
 
-		//String oldFollowersColl = "oldTweets";
-		//String[] oldCelebrities = {};
+		String oldTweetsColl = "oldstersTweets";
+		String oldFollowersColl = "oldFollowers";
+		String[] oldCelebrities = {"AP", "MarthaStewart", "Oprah", "USAgov", "IBDinvestors", 
+				"Emeril", "hedgefundinvest", "BreakoutStocks", "NS_ukgov", "wallstCS",
+				"WSJ", "beegeesforever", "PaulMcCartney", "eltonjohndotcom",
+				"MickJagger","RatPack_Frank", "BarbaraJWalters", "WholeFoods", "FinancialTimes", "BarackObama"};
 
-		collect(youngCelebrities, youngFollowersColl, youngTweetsColl);
-
+		//collect(youngCelebrities, youngFollowersColl, youngTweetsColl);
+		collect(oldCelebrities, oldFollowersColl, oldTweetsColl);
+		
 	}
 
 	/*
@@ -64,29 +69,35 @@ public final class RunExperiment {
 
 
 	public static void collect(String[] celebs, String followerColl, String tweetsColl) {
-//
-//		FollowersCollector collector = new FollowersCollector(followerColl);
-//		collector.collectAllFollowers(celebs, 1);
-//
-//		long[] collectedFollowers = collector.getCollectedFollowers();
-//
+
+		FollowersCollector collector = new FollowersCollector(followerColl);
+		collector.collectAllFollowers(celebs, 1);
+
+		long[] collectedFollowers = collector.getCollectedFollowers();
+
 		TweetCollector tweetColl = new TweetCollector(tweetsColl);
-//
-//		for (int i = 0; i < 7; i++) {
-//			long[] notAll = Arrays.copyOfRange(collectedFollowers, i*5000, (i+1)*5000);
-//			tweetColl.getStream(notAll, 120000);
-//		}
 
-		String in = "forTagging.txt";
-		String out = "output.txt";
-//		tweetColl.createFileForTagging(in);
-//		TaggerUtils.runPOSTagger(in, out);
-//		tweetColl.storeTaggedTweets(out);
+		for (int i = 0; i < 7; i++) {
+			long[] notAll = Arrays.copyOfRange(collectedFollowers, i*5000, (i+1)*5000);
+			tweetColl.getStream(notAll, 600000);
+		}
 
-//		tweetColl.getAllTweets();
+		//String in = "forTagging.txt";
+		//String out = "output.txt";
+		String in = "forTaggingOld.txt";
+		String out = "outputOld.txt";
 		
-		String featuresFile = "youngUsers.txt";
-		String label = "Y";
+		tweetColl.createFileForTagging(in);
+		TaggerUtils.runPOSTagger(in, out);
+		System.out.println("The pos tagger is finished.");
+		tweetColl.storeTaggedTweets(out);
+
+		tweetColl.getAllTweets();
+		
+//		String featuresFile = "youngUsers.txt";
+//		String label = "Y";
+		String featuresFile = "oldUsers.txt";
+		String label = "O";
 		FeatureExtraction extr = new FeatureExtraction(featuresFile, label, tweetsColl);
 		extr.extractFeatures();
 	}
