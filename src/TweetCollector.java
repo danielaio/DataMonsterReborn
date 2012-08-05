@@ -21,6 +21,10 @@ public class TweetCollector {
 		utils.createFileForTagging(filename);
 	}
 	
+	public void storeTaggedTweetsForNaiveBayes(String output) {
+		utils.storeTaggedTweetsForNaiveBayes(output);
+	}
+	
 	public void storeTaggedTweets(String output) {
 		utils.storeTaggedTweets(output);
 	}

@@ -126,4 +126,32 @@ public class FeatureExtraction {
 			}
 		}
 	}
+	
+	private void storeTweetAsLine(String line) throws IOException {
+		fstream = new FileWriter(filename, true);
+		out = new BufferedWriter(fstream);
+		
+		out.write(line + "\n");
+		
+		out.close();
+		fstream.close();
+	}
+	
+	public void extractFeaturesNaiveBayesPerTweet() {
+
+
+		TweetsStorageUtils utils = new TweetsStorageUtils(coll);
+		
+		DBCursor allTweets = utils.getAllTweets();
+		
+		while(allTweets.hasNext()) {
+			//add tweet to file, tokens separated with a space :)
+			DBObject next = allTweets.next();
+			String text = (String) next.get("text_tokens");
+			
+			
+			
+			
+		}
+	}
 }

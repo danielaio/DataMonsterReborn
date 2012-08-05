@@ -50,8 +50,8 @@ public final class RunExperiment {
 				"WSJ", "beegeesforever", "PaulMcCartney", "eltonjohndotcom",
 				"MickJagger","RatPack_Frank", "BarbaraJWalters", "WholeFoods", "FinancialTimes", "BarackObama"};
 
-		//collect(youngCelebrities, youngFollowersColl, youngTweetsColl);
-		collect(oldCelebrities, oldFollowersColl, oldTweetsColl);
+		collect(youngCelebrities, youngFollowersColl, youngTweetsColl);
+		//collect(oldCelebrities, oldFollowersColl, oldTweetsColl);
 		
 	}
 
@@ -70,35 +70,38 @@ public final class RunExperiment {
 
 	public static void collect(String[] celebs, String followerColl, String tweetsColl) {
 
-		FollowersCollector collector = new FollowersCollector(followerColl);
-		collector.collectAllFollowers(celebs, 1);
-
-		long[] collectedFollowers = collector.getCollectedFollowers();
-
+//		FollowersCollector collector = new FollowersCollector(followerColl);
+//		collector.collectAllFollowers(celebs, 1);
+//
+//		long[] collectedFollowers = collector.getCollectedFollowers();
+//
 		TweetCollector tweetColl = new TweetCollector(tweetsColl);
-
-		for (int i = 0; i < 7; i++) {
-			long[] notAll = Arrays.copyOfRange(collectedFollowers, i*5000, (i+1)*5000);
-			tweetColl.getStream(notAll, 600000);
-		}
+//
+//		for (int i = 0; i < 7; i++) {
+//			long[] notAll = Arrays.copyOfRange(collectedFollowers, i*5000, (i+1)*5000);
+//			tweetColl.getStream(notAll, 600000);
+//		}
 
 		//String in = "forTagging.txt";
 		//String out = "output.txt";
-		String in = "forTaggingOld.txt";
-		String out = "outputOld.txt";
+		//String in = "forTaggingOld.txt";
+		//String out = "outputOld.txt";
 		
-		tweetColl.createFileForTagging(in);
-		TaggerUtils.runPOSTagger(in, out);
-		System.out.println("The pos tagger is finished.");
-		tweetColl.storeTaggedTweets(out);
+//		tweetColl.createFileForTagging(in);
+//		TaggerUtils.runPOSTagger(in, out);
+//		System.out.println("The pos tagger is finished.");
+		
+		//store just the young first, then the old, then copy and paste
+		String output = "output.txt";
+//		String output = "outputOld.txt";
+		tweetColl.storeTaggedTweetsForNaiveBayes(output);
 
-		tweetColl.getAllTweets();
 		
 //		String featuresFile = "youngUsers.txt";
 //		String label = "Y";
-		String featuresFile = "oldUsers.txt";
-		String label = "O";
-		FeatureExtraction extr = new FeatureExtraction(featuresFile, label, tweetsColl);
-		extr.extractFeatures();
+//		String featuresFile = "oldUsers.txt";
+//		String label = "O";
+//		FeatureExtraction extr = new FeatureExtraction(featuresFile, label, tweetsColl);
+//		extr.extractFeatures();
 	}
 }

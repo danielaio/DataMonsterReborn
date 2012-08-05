@@ -2,21 +2,24 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
-	<classpathentry kind="lib" path="C:/Users/Dani/twitter2/brendano-ark-tweet-nlp-b38e37e/lib/ark-tweet-nlp.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Dani/twitter2/brendano-ark-tweet-nlp-b38e37e/lib/commons-codec-1.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Dani/twitter2/brendano-ark-tweet-nlp-b38e37e/lib/commons-math-2.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Dani/twitter2/brendano-ark-tweet-nlp-b38e37e/lib/jargs.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Dani/twitter2/brendano-ark-tweet-nlp-b38e37e/lib/posBerkeley.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Dani/twitter2/brendano-ark-tweet-nlp-b38e37e/lib/scala-library-2.9.0.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Dani/twitter2/brendano-ark-tweet-nlp-b38e37e/lib_build/scala-compiler-2.9.0.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Dani/twitter2/mongo-2.8.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Dani/twitter2/mongo-java-driver-2.8.0-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Dani/twitter2/twitter4j-2.2.6/lib/twitter4j-async-2.2.6.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Dani/twitter2/twitter4j-2.2.6/lib/twitter4j-core-2.2.6.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Dani/twitter2/twitter4j-2.2.6/lib/twitter4j-examples-2.2.6.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Dani/twitter2/twitter4j-2.2.6/lib/twitter4j-media-support-2.2.6.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Dani/twitter2/twitter4j-2.2.6/lib/twitter4j-stream-2.2.6.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Dani/twitter2/mallet-2.0.7/dist/mallet.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Dani/twitter2/mallet-2.0.7/dist/mallet-deps.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dstanoev/Desktop/dani/twitter/brendano-ark-tweet-nlp-b38e37e/lib/ark-tweet-nlp.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dstanoev/Desktop/dani/twitter/brendano-ark-tweet-nlp-b38e37e/lib/commons-codec-1.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dstanoev/Desktop/dani/twitter/brendano-ark-tweet-nlp-b38e37e/lib/commons-math-2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dstanoev/Desktop/dani/twitter/brendano-ark-tweet-nlp-b38e37e/lib/jargs.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dstanoev/Desktop/dani/twitter/brendano-ark-tweet-nlp-b38e37e/lib/posBerkeley.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dstanoev/Desktop/dani/twitter/brendano-ark-tweet-nlp-b38e37e/lib/scala-library-2.9.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dstanoev/Desktop/dani/twitter/mongo-2.8.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dstanoev/Desktop/dani/twitter/mongo-java-driver-2.8.0-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dstanoev/Desktop/dani/twitter/twitter4j-2.2.6/lib/twitter4j-async-2.2.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dstanoev/Desktop/dani/twitter/twitter4j-2.2.6/lib/twitter4j-core-2.2.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dstanoev/Desktop/dani/twitter/twitter4j-2.2.6/lib/twitter4j-examples-2.2.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dstanoev/Desktop/dani/twitter/twitter4j-2.2.6/lib/twitter4j-media-support-2.2.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dstanoev/Desktop/dani/twitter/twitter4j-2.2.6/lib/twitter4j-stream-2.2.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dstanoev/Desktop/dani/twitter/mallet-2.0.7/dist/mallet.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/dstanoev/Desktop/dani/twitter/mallet-2.0.7/dist/mallet-2.0.7-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/dstanoev/Desktop/dani/twitter/mallet-2.0.7/dist/mallet-deps.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

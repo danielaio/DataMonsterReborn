@@ -77,13 +77,9 @@ public class TweetsStorageUtils {
 		coll.remove(new BasicDBObject("_id", new ObjectId("50107a0d00618068dd15f97d")));
 	}
 	
-	public void getAllTweets() {
+	public DBCursor getAllTweets() {
 		DBCursor cur = coll.find();
-		int c = 0;
-		while (cur.hasNext()) {
-			System.out.println(cur.next().get("texttt"));
-			c++;
-		}
+		return cur;
 	}
 	
 
@@ -128,6 +124,48 @@ public class TweetsStorageUtils {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public void storeTaggedTweetsForNaiveBayes(String output) {
+
+		try {
+			FileReader fstream = new FileReader(output);
+			BufferedReader in = new BufferedReader(fstream);
+			String line = in.readLine();
+
+			while (line != null) {
+
+				String id = line.substring(0, line.length() - 2);
+				line = in.readLine();
+
+				StringBuilder builder = new StringBuilder();
+				while (!line.equals("")) {
+					//each line is a word, tag pair
+					String word = line.substring(0, line.indexOf("\t"));
+					String tag = line.substring(line.indexOf("\t") + 1);
+
+					tag = convertTag(tag);
+					
+					builder.append(" ").append(word);
+					
+					line = in.readLine();
+				}
+
+				BasicDBObject newObj = new BasicDBObject().
+						append("$set", new BasicDBObject().append("text_tokens", builder.toString().trim()));
+
+				coll.update(new BasicDBObject("_id", new ObjectId(id)), newObj);
+				line = in.readLine();
+			}
+			in.close();
+			fstream.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	public void createFileForTagging(String filename){
 		DBCursor cur = coll.find();
