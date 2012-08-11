@@ -34,7 +34,11 @@ public final class RunExperiment {
 
 	public static void main(String[] args) {
 
+		//collectYoung();
+		collectOld();
+	}
 
+	public static void collectYoung() {
 		String youngTweetsColl = "youngstersTweets";
 		String youngFollowersColl = "youngFollowers";
 		String[] youngCelebrities = {"GLEEonFOX", 
@@ -42,6 +46,16 @@ public final class RunExperiment {
 				"EA", "PlayStation", "J14Magazine", "twilight_fan",
 				"MTVteenwolf", "IMDb", "gossipgirl", "youngdemocrat", 
 				"younglibs", "BCYoungLiberals", "wayoungliberals", "taylorswift13", "justinbieber"};
+		String featuresFile = "youngFeaturesNaiveBayes.txt";
+		String label = "Y";
+		String in = "forTagging.txt";
+		String out = "output.txt";
+
+		collect(youngCelebrities, youngFollowersColl, youngTweetsColl, in, out, featuresFile, label);
+	}
+
+	public static void collectOld() {
+		
 
 		String oldTweetsColl = "oldstersTweets";
 		String oldFollowersColl = "oldFollowers";
@@ -49,13 +63,17 @@ public final class RunExperiment {
 				"Emeril", "hedgefundinvest", "BreakoutStocks", "NS_ukgov", "wallstCS",
 				"WSJ", "beegeesforever", "PaulMcCartney", "eltonjohndotcom",
 				"MickJagger","RatPack_Frank", "BarbaraJWalters", "WholeFoods", "FinancialTimes", "BarackObama"};
+		String featuresFile = "oldFeaturesNaiveBayes.txt";
+		String label = "O";
+		String in = "forTaggingOld.txt";
+		String out = "outputOld.txt";
 
-		collect(youngCelebrities, youngFollowersColl, youngTweetsColl);
-		//collect(oldCelebrities, oldFollowersColl, oldTweetsColl);
-		
+		collect(oldCelebrities, oldFollowersColl, oldTweetsColl, in, out, featuresFile, label);
+
 	}
-
-	/*
+	
+	
+	/**
 	 * Start by extracting all the followers of the celebrities.
 	 * Insert the followers in the respective collection.
 	 * From the collection, get all the followers. Then
@@ -66,42 +84,32 @@ public final class RunExperiment {
 	 * Repeat for the negative data set.
 	 * 
 	 */
+	public static void collect(String[] celebs, String followerColl, String tweetsColl, String fileToTag, String taggedFile, String featuresFile, String label) {
 
 
-	public static void collect(String[] celebs, String followerColl, String tweetsColl) {
-
+		//listen for tweets
 //		FollowersCollector collector = new FollowersCollector(followerColl);
 //		collector.collectAllFollowers(celebs, 1);
 //
 //		long[] collectedFollowers = collector.getCollectedFollowers();
 //
-		TweetCollector tweetColl = new TweetCollector(tweetsColl);
+		TweetCollector tweetCollector = new TweetCollector(tweetsColl);
 //
 //		for (int i = 0; i < 7; i++) {
 //			long[] notAll = Arrays.copyOfRange(collectedFollowers, i*5000, (i+1)*5000);
-//			tweetColl.getStream(notAll, 600000);
+//			tweetCollector.getStream(notAll, 600000);
 //		}
-
-		//String in = "forTagging.txt";
-		//String out = "output.txt";
-		//String in = "forTaggingOld.txt";
-		//String out = "outputOld.txt";
-		
-//		tweetColl.createFileForTagging(in);
-//		TaggerUtils.runPOSTagger(in, out);
+//
+//		//tag the tweets
+//		tweetCollector.createFileForTagging(fileToTag);
+//		TaggerUtils.runPOSTagger(fileToTag, taggedFile);
 //		System.out.println("The pos tagger is finished.");
-		
-		//store just the young first, then the old, then copy and paste
-		String output = "output.txt";
-//		String output = "outputOld.txt";
-		tweetColl.storeTaggedTweetsForNaiveBayes(output);
 
+		tweetCollector.storeTaggedTweetsForNaiveBayes(taggedFile);
 		
-//		String featuresFile = "youngUsers.txt";
-//		String label = "Y";
-//		String featuresFile = "oldUsers.txt";
-//		String label = "O";
-//		FeatureExtraction extr = new FeatureExtraction(featuresFile, label, tweetsColl);
-//		extr.extractFeatures();
+		//extract features
+		FeatureExtraction extr = new FeatureExtraction(featuresFile, label, tweetsColl);
+	//	extr.extractFeatures();
+		extr.extractFeaturesNaiveBayesPerTweet();
 	}
 }

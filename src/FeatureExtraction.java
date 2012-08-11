@@ -105,7 +105,6 @@ public class FeatureExtraction {
 						result.put(key, result.get(key) + tweet.get(key).size());
 					}
 				}
-
 			}
 
 			//normalise (divide by total)
@@ -149,9 +148,17 @@ public class FeatureExtraction {
 			DBObject next = allTweets.next();
 			String text = (String) next.get("text_tokens");
 			
+			ObjectId object = (ObjectId) next.get("_id");
 			
+			StringBuilder b = new StringBuilder();
+			b.append(object.toString()).append(" ").append(label).append(" ").append(text);
 			
-			
+			try {
+				storeTweetAsLine(b.toString());
+			} catch (IOException e) {
+				System.out.println("Couldn't store tweets");
+				e.printStackTrace();
+			}
 		}
 	}
 }

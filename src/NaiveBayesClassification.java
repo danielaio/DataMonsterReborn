@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import cc.mallet.classify.Classification;
 import cc.mallet.classify.NaiveBayes;
 import cc.mallet.classify.NaiveBayesTrainer;
+import cc.mallet.classify.Trial;
+import cc.mallet.pipe.CharSequence2TokenSequence;
 import cc.mallet.pipe.FeatureSequence2FeatureVector;
 import cc.mallet.pipe.Pipe;
 import cc.mallet.pipe.SerialPipes;
@@ -24,6 +26,7 @@ public class NaiveBayesClassification {
 		ArrayList<Pipe> pipeList = new ArrayList<Pipe>();
 
 		pipeList.add(new Target2Label());
+		pipeList.add(new CharSequence2TokenSequence());
 		pipeList.add(new TokenSequence2FeatureSequence());
 		pipeList.add(new FeatureSequence2FeatureVector());
 
@@ -35,21 +38,21 @@ public class NaiveBayesClassification {
 		}
 
 		return instances;
-		
+
 	}
-	
+
 	public static void main (String Args []) {                              
-		
-		String file = "allUsers.txt";
-		
+
+		String file = "allTweetsNaiveBayes.txt";
+
 		InstanceList instances = createInstances(file);
-        NaiveBayesTrainer trainer = new NaiveBayesTrainer ();
-        NaiveBayes cl = trainer.train(instances);
-        Classification c = cl.classify("I am sooooooooo happyyyyy :):):):):):):)!!! lols");
-        
-      //  InstanceList[] instanceLists = instances.split(new Randoms(),
-      //  		new double[] {0.6, 0.2, 0.2});
-        
-        System.out.println ("Class Name – " + c.getLabeling().getBestLabel());
-}
+		InstanceList[] instanceLists = instances.split(new Randoms(), new double[] {0.6, 0.2, 0.2});
+
+		NaiveBayesTrainer trainer = new NaiveBayesTrainer ();
+		NaiveBayes cl = trainer.train(instanceLists[0]);
+
+		Trial trial = new Trial(cl, instanceLists[1]);
+
+		System.out.println(trial.getAccuracy());
+	}
 }
