@@ -45,7 +45,13 @@ public final class RunExperiment {
 				"carlyraejepsen", "RyanSeacrest", "MTV", "RIDEBMX",
 				"EA", "PlayStation", "J14Magazine", "twilight_fan",
 				"MTVteenwolf", "IMDb", "gossipgirl", "youngdemocrat", 
-				"younglibs", "BCYoungLiberals", "wayoungliberals", "taylorswift13", "justinbieber"};
+				"younglibs", "BCYoungLiberals", "wayoungliberals", "taylorswift13", "justinbieber",
+				"Eminem", "britneyspears", "MileyCyrus", "TheRock",
+				"aplusk", "Chegg", "TheDerekJohnson", "winscholarships", "USATODAYcollege",
+				"mtvU", "CollegeDJ", "MyCollegeOnline", "Harvard", "Harvard_Law", "Stanford",
+				"Buckeye_Nation", "WUSTLsoccer", "ArkRazorbacks", "SRCollegeSports", "SRCollegeSports",
+				"CFBONFOX", "HawaiiAthletics", "DailyEmerald", "JMUSports", "ThePittNews",
+				"katyperry", "rihanna", "NICKIMINAJ", "SnoopDogg"};
 		String featuresFile = "youngFeaturesNaiveBayes.txt";
 		String label = "Y";
 		String in = "forTagging.txt";
@@ -62,7 +68,17 @@ public final class RunExperiment {
 		String[] oldCelebrities = {"AP", "MarthaStewart", "Oprah", "USAgov", "IBDinvestors", 
 				"Emeril", "hedgefundinvest", "BreakoutStocks", "NS_ukgov", "wallstCS",
 				"WSJ", "beegeesforever", "PaulMcCartney", "eltonjohndotcom",
-				"MickJagger","RatPack_Frank", "BarbaraJWalters", "WholeFoods", "FinancialTimes", "BarackObama"};
+				"MickJagger","RatPack_Frank", "BarbaraJWalters", "WholeFoods", "FinancialTimes", "BarackObama"
+				 ,"DAVID_LYNCH", "algore", "andersoncooper", "TheDemocrats", "thinkprogress", "indecision", "Schwarzenegger",
+				 "rollcall", "iRevolt", "JeffreyFeldman", "DailyCaller", "DWStweets", "TheWeek",
+				 "BrainLine", "summertomato", "KelliThompson", "kellyoxford", "organicdealsmom"
+				 , "Babyjobamboo", "LizSzabo", "cheeriokeeper", "MommyNews", "Nightowlmama",
+				 "Mother_Tongue", "babygoodbuys", "SarahMaizes", "TheChefsWife", "VictoryTrue",
+				 "bookpubs", "LitChat", "PenguinUKBooks", "littlebrown", "books", "MaryAnnScheuer",
+				 "smashingmag", "webdesignledger", "chrisspooner", "BloombergNews", "dantanner",
+				 "tomkeene", "SmarTrend", "Reuters", "jessefelder", "tnewbold", "parenting",
+				 "YourChessCoach", "adnys", "timdub", "RichHopkins", "n2nbroadway", "n2nbroadway"
+				 , "travisbedard", "espn", "nfl", "MariahCarey", "davidguetta"};
 		String featuresFile = "oldFeaturesNaiveBayes.txt";
 		String label = "O";
 		String in = "forTaggingOld.txt";
