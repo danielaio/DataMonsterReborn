@@ -1,28 +1,7 @@
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Arrays;
 
-import com.mongodb.DBCursor;
-
-import edu.cmu.cs.lti.ark.tweetnlp.RunPOSTagger;
-
-import twitter4j.FilterQuery;
-import twitter4j.IDs;
-import twitter4j.RateLimitStatusEvent;
-import twitter4j.RateLimitStatusListener;
-import twitter4j.Status;
-import twitter4j.StatusDeletionNotice;
-import twitter4j.StatusListener;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
-import twitter4j.TwitterStream;
-import twitter4j.TwitterStreamFactory;
-import twitter4j.conf.ConfigurationBuilder;
-import twitter4j.json.DataObjectFactory;
+import twitter4j.conf.Configuration;
 
 
 public final class RunExperiment {
@@ -31,10 +10,11 @@ public final class RunExperiment {
 	 *
 	 * @param args message
 	 */
+	private static Configuration conf = Authentication.authenticate();
+	public final static String DB = "mydb2";
 
-	public static void main(String[] args) {
-
-		//collectYoung();
+	public static void main(String[] args) {		
+		collectYoung();
 		collectOld();
 	}
 
@@ -61,7 +41,6 @@ public final class RunExperiment {
 	}
 
 	public static void collectOld() {
-		
 
 		String oldTweetsColl = "oldstersTweets";
 		String oldFollowersColl = "oldFollowers";
@@ -85,7 +64,6 @@ public final class RunExperiment {
 		String out = "outputOld.txt";
 
 		collect(oldCelebrities, oldFollowersColl, oldTweetsColl, in, out, featuresFile, label);
-
 	}
 	
 	
@@ -102,30 +80,29 @@ public final class RunExperiment {
 	 */
 	public static void collect(String[] celebs, String followerColl, String tweetsColl, String fileToTag, String taggedFile, String featuresFile, String label) {
 
-
 		//listen for tweets
-//		FollowersCollector collector = new FollowersCollector(followerColl);
-//		collector.collectAllFollowers(celebs, 1);
-//
-//		long[] collectedFollowers = collector.getCollectedFollowers();
-//
-		TweetCollector tweetCollector = new TweetCollector(tweetsColl);
-//
+		FollowersCollector collector = new FollowersCollector(followerColl, conf);
+		collector.collectAllFollowers(celebs, 1000);
+
+		long[] collectedFollowers = collector.getCollectedFollowers();
+
+		TweetCollector tweetCollector = new TweetCollector(tweetsColl, conf);
+
 //		for (int i = 0; i < 7; i++) {
 //			long[] notAll = Arrays.copyOfRange(collectedFollowers, i*5000, (i+1)*5000);
 //			tweetCollector.getStream(notAll, 600000);
 //		}
-//
+
 //		//tag the tweets
 //		tweetCollector.createFileForTagging(fileToTag);
 //		TaggerUtils.runPOSTagger(fileToTag, taggedFile);
 //		System.out.println("The pos tagger is finished.");
 
-		tweetCollector.storeTaggedTweetsForNaiveBayes(taggedFile);
+//		tweetCollector.storeTaggedTweetsForNaiveBayes(taggedFile);
 		
 		//extract features
-		FeatureExtraction extr = new FeatureExtraction(featuresFile, label, tweetsColl);
+//		FeatureExtraction extr = new FeatureExtraction(featuresFile, label, tweetsColl);
 	//	extr.extractFeatures();
-		extr.extractFeaturesNaiveBayesPerTweet();
+//		extr.extractFeaturesNaiveBayesPerTweet();
 	}
 }

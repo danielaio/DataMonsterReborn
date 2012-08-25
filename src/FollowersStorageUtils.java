@@ -35,7 +35,7 @@ public class FollowersStorageUtils {
 	public FollowersStorageUtils(String collection) {
 		try {
 			m = new Mongo();
-			db = m.getDB("mydb");
+			db = m.getDB(RunExperiment.DB);
 			coll = db.getCollection(collection);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();

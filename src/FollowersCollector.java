@@ -4,19 +4,22 @@ import twitter4j.IDs;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
+import twitter4j.conf.Configuration;
 
 
 public class FollowersCollector {
 
 	FollowersStorageUtils utils;
-
-	public FollowersCollector (String coll) {
+	private Configuration conf;
+	
+	public FollowersCollector (String coll, final Configuration conf) {
 		this.utils = new FollowersStorageUtils(coll);
+		this.conf = conf;
 	}
 
 	public void collectAllFollowers(String[] args, int iters) {
 
-		Twitter twitter = new TwitterFactory(Authentication.authenticate()).getInstance();
+		Twitter twitter = new TwitterFactory(conf).getInstance();
 
 		long cursor = -1;
 		IDs ids;

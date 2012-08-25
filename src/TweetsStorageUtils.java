@@ -31,7 +31,7 @@ public class TweetsStorageUtils {
 		
 		try {
 			m = new Mongo();
-			db = m.getDB("mydb");
+			db = m.getDB(RunExperiment.DB);
 			this.coll = db.getCollection(collection);
 
 		} catch (UnknownHostException e) {

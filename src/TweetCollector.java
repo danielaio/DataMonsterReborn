@@ -12,9 +12,11 @@ import twitter4j.json.DataObjectFactory;
 public class TweetCollector {
 
 	TweetsStorageUtils utils;
+	private Configuration conf;
 	
-	public TweetCollector(String coll) {
+	public TweetCollector(String coll, final Configuration conf) {
 		utils = new TweetsStorageUtils(coll);
+		this.conf = conf;
 	}
 	
 	public void createFileForTagging(String filename) {
@@ -58,7 +60,8 @@ public class TweetCollector {
 				ex.printStackTrace();
 			}
 		};
-		TwitterStream twitterStream = new TwitterStreamFactory(Authentication.authenticate()).getInstance();
+		
+		TwitterStream twitterStream = new TwitterStreamFactory(conf).getInstance();
 		twitterStream.addListener(listener);
 
 		System.out.println("Printing beliebers' tweets :):)");
