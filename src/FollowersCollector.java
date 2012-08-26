@@ -5,7 +5,7 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.Configuration;
-
+import twitter4j.RateLimitStatus;
 
 public class FollowersCollector {
 
@@ -24,20 +24,33 @@ public class FollowersCollector {
 		long cursor = -1;
 		IDs ids;
 
-		ArrayList<Long> followers = new ArrayList<Long>();
+		ArrayList<Long> followers;
+		
+		RateLimitStatus status;
 
 		for (String one : args) {
+			followers = new ArrayList<Long>();
 			try {
 				int count = 0;
 				do {
 					ids = twitter.getFollowersIDs(one, cursor);
+					status = ids.getRateLimitStatus();
 					for (long id : ids.getIDs()) {
 						followers.add(id);
 					}
 					utils.storeFollowers(followers);
 					count++;
-
+					
+					if (status.getRemainingHits() < 5) {
+						try {
+							Thread.sleep(status.getSecondsUntilReset());
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				
 				} while ((cursor = ids.getNextCursor()) != 0 && count < iters);
+				System.out.println(followers.size());
 			} catch (TwitterException e) {
 				e.printStackTrace();
 			}

@@ -13,7 +13,8 @@ public final class RunExperiment {
 	private static Configuration conf = Authentication.authenticate();
 	public final static String DB = "mydb2";
 
-	public static void main(String[] args) {		
+	public static void main(String[] args) {	
+		
 		collectYoung();
 		collectOld();
 	}
@@ -88,10 +89,10 @@ public final class RunExperiment {
 
 		TweetCollector tweetCollector = new TweetCollector(tweetsColl, conf);
 
-//		for (int i = 0; i < 7; i++) {
-//			long[] notAll = Arrays.copyOfRange(collectedFollowers, i*5000, (i+1)*5000);
-//			tweetCollector.getStream(notAll, 600000);
-//		}
+		for (int i = 0; i <= collectedFollowers.length/5000; i++) {
+			long[] notAll = Arrays.copyOfRange(collectedFollowers, i*5000, (i+1)*5000);
+			tweetCollector.getStream(notAll, 600000);
+		}
 
 //		//tag the tweets
 //		tweetCollector.createFileForTagging(fileToTag);
