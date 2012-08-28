@@ -1,11 +1,13 @@
 import java.util.ArrayList;
 
 import twitter4j.IDs;
+import twitter4j.RateLimitStatus;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.Configuration;
-import twitter4j.RateLimitStatus;
+
+import com.mongodb.DBCursor;
 
 public class FollowersCollector {
 
@@ -20,37 +22,33 @@ public class FollowersCollector {
 	public void collectAllFollowers(String[] args, int iters) {
 
 		Twitter twitter = new TwitterFactory(conf).getInstance();
-
-		long cursor = -1;
 		IDs ids;
 
-		ArrayList<Long> followers;
-		
-		RateLimitStatus status;
-
 		for (String one : args) {
-			followers = new ArrayList<Long>();
+			ArrayList<Long> followers = new ArrayList<Long>();
 			try {
 				int count = 0;
+				long cursor = -1;
 				do {
 					ids = twitter.getFollowersIDs(one, cursor);
-					status = ids.getRateLimitStatus();
+					RateLimitStatus status = ids.getRateLimitStatus();
 					for (long id : ids.getIDs()) {
 						followers.add(id);
 					}
 					utils.storeFollowers(followers);
 					count++;
 					
-					if (status.getRemainingHits() < 5) {
+					if (status.getRemainingHits() < 10) {
 						try {
-							Thread.sleep(status.getSecondsUntilReset());
+							int secondsUntilReset = status.getSecondsUntilReset() > 0 ? status.getSecondsUntilReset() : 1;
+							Thread.sleep(secondsUntilReset * 1000);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
 					}
 				
 				} while ((cursor = ids.getNextCursor()) != 0 && count < iters);
-				System.out.println(followers.size());
+				System.out.println(followers.size() + " " + one);
 			} catch (TwitterException e) {
 				e.printStackTrace();
 			}
@@ -60,6 +58,13 @@ public class FollowersCollector {
 	//could add some sort of randomisation here...
 	public long[] getCollectedFollowers() {
 		return utils.getCollectedFollowersFromDB();
+	}
+	
+	public DBCursor getCollectedFollowersFromDBInPortions(int max) {
+		return utils.getCollectedFollowersFromDBInPortions(max);
+	}
+	public long[] getRandomSampleOfFollowers(int number) {
+		return utils.getRandomSampleOfFollowersFromDB(number);
 	}
 	
 }

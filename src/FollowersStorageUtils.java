@@ -53,16 +53,37 @@ public class FollowersStorageUtils {
 	}
 	
 	public long[] getCollectedFollowersFromDB() {
+		
+		
 		DBCursor cur = coll.find();
 		System.out.println(cur.count());
 		
-		long[] arr = new long[cur.count()];
-		for (int i = 0; i < cur.count(); i++) {
+		long[] arr = new long[4000];
+		for (int i = 0; i < arr.length ; i++) {
 			arr[i] = ((Long) cur.next().get("_id")).longValue();
 		}
 		
 		return arr;
 	}
+	
+	public DBCursor getCollectedFollowersFromDBInPortions(int max) {
 		
+		DBCursor cur = coll.find();
+		return cur;
+	}
+		
+	public long[] getRandomSampleOfFollowersFromDB(int number) {
+	
+		
+		long[] res = new long[number];
+		for (int i = 0; i < number; i++) {
+			double random = Math.random();
+			double cmp = Math.random();
+			
+			res[i] = (Long) coll.findOne().get("_id");
+		}
+		
+		return res;
+	}
 
 }

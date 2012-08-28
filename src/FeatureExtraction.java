@@ -1,11 +1,13 @@
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.bson.types.ObjectId;
 
@@ -58,9 +60,9 @@ public class FeatureExtraction {
 	}
 
 
-	private void storeLine(String id) throws IOException {
+	private void storeLineForOldFeatureExtraction(String id, String file) throws IOException {
 
-		fstream = new FileWriter(filename, true);
+		fstream = new FileWriter(file, true);
 		out = new BufferedWriter(fstream);
 
 		StringBuilder line = new StringBuilder();
@@ -74,7 +76,7 @@ public class FeatureExtraction {
 		fstream.close();
 	}
 
-	public void extractFeatures() {
+	public void extractFeatures(String file) {
 
 
 		TweetsStorageUtils utils = new TweetsStorageUtils(coll);
@@ -115,7 +117,7 @@ public class FeatureExtraction {
 			System.out.println(total);
 
 			try {
-				storeLine(user);
+				storeLineForOldFeatureExtraction(user, file);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -158,6 +160,55 @@ public class FeatureExtraction {
 			} catch (IOException e) {
 				System.out.println("Couldn't store tweets");
 				e.printStackTrace();
+			}
+		}
+	}
+	
+	HashMap<String, Pattern> features = new HashMap<String, Pattern>();
+	
+	private void createSocioLinguisticFeatures() {
+		features.put("omg", Pattern.compile("omg|OMG|(Oh)?.? (My)?.? Go+d.?|(oh)? my go+d|(oh)? (my)? goo+dness|(oh)? (my)? gosh"));
+		features.put("shout", Pattern.compile("[A-Z]+"));
+		features.put("exasp", Pattern.compile("ugh|m+|hm+|a+h+|gr+|ahm+"));
+		features.put("agreement", Pattern.compile("yeah?|ohya+|su+re|ofc"));
+		features.put("honors", Pattern.compile("bros?|dudes?|ma+n|sirs?|bro+"));
+		features.put("xoxo", Pattern.compile("(x|o)+"));
+		features.put("excitement", Pattern.compile("!+"));
+		features.put("puzzled", Pattern.compile("(!|?)+"));
+		features.put("possessive", Pattern.compile("my|our"));
+		features.put("repeated", Pattern.compile(""));
+	}
+	
+	
+	public void extractFeaturesWinnowPerTweet() {
+		TweetsStorageUtils utils = new TweetsStorageUtils(coll);
+		
+		DBCursor allTweets = utils.getAllTweets();
+		
+		while(allTweets.hasNext()) {
+			DBObject next = allTweets.next();
+			String text = (String) next.get("text_tokens");
+			
+			BasicDBObject object = (BasicDBObject) next.get("texttt");
+			Map<String, ArrayList<String>> tags = object.toMap();
+			ArrayList<String> emoticons = tags.get("E");
+			ArrayList<String> punct = tags.get("punct");
+			ArrayList<String> bang = tags.get("bang");
+			
+			String[] split = text.split(" ");
+			StringBuilder result = new StringBuilder();
+			
+			
+			for (String word : split) {
+				//does word match any of the socio-linguistic features?
+				for (String feature : features.keySet()) {
+					Pattern p = features.get(feature);
+					Matcher m = p.matcher(word);
+					boolean fromregex = m.find(); 
+					boolean fromtags = emoticons.contains(word) || punct.contains(word) || bang.contains(word);
+
+					result.append(fromregex || fromtags ? 1 : 0);
+				}
 			}
 		}
 	}

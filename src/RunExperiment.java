@@ -3,6 +3,8 @@ import java.util.Arrays;
 
 import twitter4j.conf.Configuration;
 
+import com.mongodb.DBCursor;
+
 
 public final class RunExperiment {
 	/**
@@ -22,17 +24,18 @@ public final class RunExperiment {
 	public static void collectYoung() {
 		String youngTweetsColl = "youngstersTweets";
 		String youngFollowersColl = "youngFollowers";
-		String[] youngCelebrities = {"GLEEonFOX", 
-				"carlyraejepsen", "RyanSeacrest", "MTV", "RIDEBMX",
+		String[] youngCelebrities = {"carlyraejepsen", "RyanSeacrest", "MTV", "RIDEBMX",
 				"EA", "PlayStation", "J14Magazine", "twilight_fan",
 				"MTVteenwolf", "IMDb", "gossipgirl", "youngdemocrat", 
-				"younglibs", "BCYoungLiberals", "wayoungliberals", "taylorswift13", "justinbieber",
-				"Eminem", "britneyspears", "MileyCyrus", "TheRock",
-				"aplusk", "Chegg", "TheDerekJohnson", "winscholarships", "USATODAYcollege",
-				"mtvU", "CollegeDJ", "MyCollegeOnline", "Harvard", "Harvard_Law", "Stanford",
+				"taylorswift13", "justinbieber",
+				"Eminem", "britneyspears", "StephenAtHome","mtvU", "CollegeDJ", "MyCollegeOnline", "Harvard", "Harvard_Law", "Stanford",
+				"younglibs", "BCYoungLiberals", "wayoungliberals", 
 				"Buckeye_Nation", "WUSTLsoccer", "ArkRazorbacks", "SRCollegeSports", "SRCollegeSports",
 				"CFBONFOX", "HawaiiAthletics", "DailyEmerald", "JMUSports", "ThePittNews",
-				"katyperry", "rihanna", "NICKIMINAJ", "SnoopDogg"};
+				"katyperry", "rihanna", "NICKIMINAJ", "SnoopDogg", "MileyCyrus", "TheRock",
+				"aplusk", "Chegg", "TheDerekJohnson", "winscholarships", "USATODAYcollege",
+				"GLEEonFOX", 
+				};
 		String featuresFile = "youngFeaturesNaiveBayes.txt";
 		String label = "Y";
 		String in = "forTagging.txt";
@@ -45,26 +48,30 @@ public final class RunExperiment {
 
 		String oldTweetsColl = "oldstersTweets";
 		String oldFollowersColl = "oldFollowers";
-		String[] oldCelebrities = {"AP", "MarthaStewart", "Oprah", "USAgov", "IBDinvestors", 
-				"Emeril", "hedgefundinvest", "BreakoutStocks", "NS_ukgov", "wallstCS",
+		String[] oldies = {"Emeril", "hedgefundinvest", "BreakoutStocks", "NS_ukgov", "wallstCS",
 				"WSJ", "beegeesforever", "PaulMcCartney", "eltonjohndotcom",
-				"MickJagger","RatPack_Frank", "BarbaraJWalters", "WholeFoods", "FinancialTimes", "BarackObama"
-				 ,"DAVID_LYNCH", "algore", "andersoncooper", "TheDemocrats", "thinkprogress", "indecision", "Schwarzenegger",
+				"MickJagger","RatPack_Frank", "BarbaraJWalters", "WholeFoods", "FinancialTimes", "BarackObama"};
+		String[] oldCelebrities = {"DAVID_LYNCH", "algore", "andersoncooper", "TheDemocrats", "thinkprogress", "indecision", "Schwarzenegger",
 				 "rollcall", "iRevolt", "JeffreyFeldman", "DailyCaller", "DWStweets", "TheWeek",
 				 "BrainLine", "summertomato", "KelliThompson", "kellyoxford", "organicdealsmom"
-				 , "Babyjobamboo", "LizSzabo", "cheeriokeeper", "MommyNews", "Nightowlmama",
-				 "Mother_Tongue", "babygoodbuys", "SarahMaizes", "TheChefsWife", "VictoryTrue",
+				 , "Babyjobamboo",  "VictoryTrue",
 				 "bookpubs", "LitChat", "PenguinUKBooks", "littlebrown", "books", "MaryAnnScheuer",
 				 "smashingmag", "webdesignledger", "chrisspooner", "BloombergNews", "dantanner",
 				 "tomkeene", "SmarTrend", "Reuters", "jessefelder", "tnewbold", "parenting",
 				 "YourChessCoach", "adnys", "timdub", "RichHopkins", "n2nbroadway", "n2nbroadway"
-				 , "travisbedard", "espn", "nfl", "MariahCarey", "davidguetta"};
+				 , "travisbedard", "espn", "nfl", "MariahCarey", "MommyNews","LizSzabo", "cheeriokeeper",  "Nightowlmama",
+				 "Mother_Tongue", "babygoodbuys", "SarahMaizes", "TheChefsWife","AP", "MarthaStewart", "Oprah", "USAgov", "IBDinvestors", 
+				"Emeril", "hedgefundinvest", "BreakoutStocks", "NS_ukgov", "wallstCS",
+				"WSJ", "beegeesforever", "PaulMcCartney", "eltonjohndotcom",
+				"MickJagger","RatPack_Frank", "BarbaraJWalters", "WholeFoods", "FinancialTimes", "BarackObama"
+				 };
 		String featuresFile = "oldFeaturesNaiveBayes.txt";
 		String label = "O";
 		String in = "forTaggingOld.txt";
 		String out = "outputOld.txt";
 
-		collect(oldCelebrities, oldFollowersColl, oldTweetsColl, in, out, featuresFile, label);
+		//collect(oldCelebrities, oldFollowersColl, oldTweetsColl, in, out, featuresFile, label);
+		collect(oldies, oldFollowersColl, oldTweetsColl, in, out, featuresFile, label);
 	}
 	
 	
@@ -81,29 +88,37 @@ public final class RunExperiment {
 	 */
 	public static void collect(String[] celebs, String followerColl, String tweetsColl, String fileToTag, String taggedFile, String featuresFile, String label) {
 
-		//listen for tweets
+
 		FollowersCollector collector = new FollowersCollector(followerColl, conf);
-		collector.collectAllFollowers(celebs, 1000);
-
-		long[] collectedFollowers = collector.getCollectedFollowers();
-
+	
+		//collector.collectAllFollowers(celebs, 50);
+		
+		
+		int maxUserIDs = 5000;
+		DBCursor followersCur = collector.getCollectedFollowersFromDBInPortions(maxUserIDs);
 		TweetCollector tweetCollector = new TweetCollector(tweetsColl, conf);
-
-		for (int i = 0; i <= collectedFollowers.length/5000; i++) {
-			long[] notAll = Arrays.copyOfRange(collectedFollowers, i*5000, (i+1)*5000);
-			tweetCollector.getStream(notAll, 600000);
+		
+		for (int portion = 0; portion < followersCur.count() / maxUserIDs; portion++) {
+			long[] some = new long[maxUserIDs];
+			for (int i = 0; i < some.length; i++) {
+				some[i] = (Long) followersCur.next().get("_id");
+			}
+			tweetCollector.getStream(some, 600000);
+			System.out.println("Starting portion number " + portion);
 		}
+
 
 //		//tag the tweets
 //		tweetCollector.createFileForTagging(fileToTag);
 //		TaggerUtils.runPOSTagger(fileToTag, taggedFile);
 //		System.out.println("The pos tagger is finished.");
-
+//
 //		tweetCollector.storeTaggedTweetsForNaiveBayes(taggedFile);
+//		tweetCollector.storeTaggedTweets(taggedFile);
 		
 		//extract features
-//		FeatureExtraction extr = new FeatureExtraction(featuresFile, label, tweetsColl);
+		FeatureExtraction extr = new FeatureExtraction(featuresFile, label, tweetsColl);
 	//	extr.extractFeatures();
-//		extr.extractFeaturesNaiveBayesPerTweet();
+		//extr.extractFeaturesNaiveBayesPerTweet();
 	}
 }

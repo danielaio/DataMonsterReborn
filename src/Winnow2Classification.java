@@ -1,12 +1,12 @@
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.Reader;
 import java.util.ArrayList;
 
-import cc.mallet.classify.Classification;
 import cc.mallet.classify.NaiveBayes;
 import cc.mallet.classify.NaiveBayesTrainer;
 import cc.mallet.classify.Trial;
+import cc.mallet.classify.Winnow;
+import cc.mallet.classify.WinnowTrainer;
 import cc.mallet.pipe.CharSequence2TokenSequence;
 import cc.mallet.pipe.FeatureSequence2FeatureVector;
 import cc.mallet.pipe.Pipe;
@@ -18,7 +18,7 @@ import cc.mallet.types.InstanceList;
 import cc.mallet.util.Randoms;
 
 
-public class NaiveBayesClassification {
+public class Winnow2Classification {
 
 
 	public static InstanceList createInstances(String dataFile) {
@@ -43,22 +43,18 @@ public class NaiveBayesClassification {
 
 	public static void main (String Args []) {                              
 
-//		String file = "allTweetsNaiveBayes.txt";
 		String file = "allTweetsWinnow2.txt";
 
 		InstanceList instances = createInstances(file);
-		InstanceList[] instanceLists = instances.split(new Randoms(), new double[] {0.9, 0.1, 0.0});
+		InstanceList[] instanceLists = instances.split(new Randoms(), new double[] {0.8, 0.2, 0.0});
 
-		NaiveBayesTrainer trainer = new NaiveBayesTrainer ();
-		NaiveBayes cl = trainer.train(instanceLists[0]);
+		WinnowTrainer trainer = new WinnowTrainer();
+		Winnow cl = trainer.train(instanceLists[0]);
 
 		Trial trial = new Trial(cl, instanceLists[1]);
-		
-		System.out.println("Accuracy: " + trial.getAccuracy());
-		System.out.println("F1 for class Y: " + trial.getF1("Y"));
-		System.out.println("F1 for class O: " + trial.getF1("O"));
-		System.out.println("Recall: " + trial.getRecall("Y"));
-		System.out.println("Recall: " + trial.getRecall("O"));
-		
+		System.out.println(trial.getAccuracy());
 	}
 }
+
+
+
